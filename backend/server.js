@@ -2,10 +2,12 @@
 
 const fixtures = require('./fixtures.js');
 const Article = require('./models/article.js');
+const schema = require('./graphql/schema.js');
 
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const graphqlHTTP = require('express-graphql');
 
 mongoose.connect(process.env.MONGO_URL);
 
@@ -44,6 +46,11 @@ app.use(function(req, res, next) {
 app.use(bodyParser.json());
 
 app.use('/articles', require('./controllers/articles.js'));
+
+app.use('/graphql', graphqlHTTP({
+  schema: schema,
+  graphiql: true
+}));
 
 app.listen(PORT, HOST);
 console.log(`Running on http://${HOST}:${PORT}`);
