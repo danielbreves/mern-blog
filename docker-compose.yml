@@ -1,0 +1,45 @@
+version: '3'
+services:
+
+  backend:
+    build:
+      context: ./backend
+    image: mern-backend
+    environment:
+      - NODE_ENV=development
+      - MONGO_URL=mongodb://db:27017/custom-mern
+    ports:
+      - 8000:8080
+    volumes:
+       - ./backend:/var/www
+    networks:
+      - app-network
+
+  db:
+    image: mongo
+    volumes:
+      - dbdata:/data/db
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./frontend
+    image: mern-frontend
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+    ports:
+      - 80:3000
+    volumes:
+       - ./frontend:/var/www
+
+#Networks
+networks:
+  app-network:
+    driver: bridge
+
+#Volumes
+volumes:
+  dbdata:
+    driver: local
