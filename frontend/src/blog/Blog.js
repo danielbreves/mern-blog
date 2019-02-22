@@ -15,6 +15,16 @@ class App extends Component {
       error: null
     };
 
+    this.handleViewArticle = this.handleViewArticle.bind(this);
+    this.handleEditArticle = this.handleEditArticle.bind(this);
+    this.handleDeleteArticle = this.handleDeleteArticle.bind(this);
+    this.handleArticleSaved = this.handleArticleSaved.bind(this);
+    this.handleBackClicked = this.handleBackClicked.bind(this);
+    this.handleAddNew = this.handleAddNew.bind(this);
+    this.handleError = this.handleError.bind(this);
+  }
+
+  componentDidMount() {
     ArticlesAPI.get().then(response => {
       if (!response.articles) {
         this.setState({ error: "Failed to fetch articles :(" });
@@ -24,14 +34,6 @@ class App extends Component {
         });
       }
     }).catch(error => this.setState({ error: error.message }));
-
-    this.handleViewArticle = this.handleViewArticle.bind(this);
-    this.handleEditArticle = this.handleEditArticle.bind(this);
-    this.handleDeleteArticle = this.handleDeleteArticle.bind(this);
-    this.handleArticleSaved = this.handleArticleSaved.bind(this);
-    this.handleBackClicked = this.handleBackClicked.bind(this);
-    this.handleAddNew = this.handleAddNew.bind(this);
-    this.handleError = this.handleError.bind(this);
   }
 
   findArticle(id) {
