@@ -1,5 +1,5 @@
 #
-# Frontend
+# Backend
 #
 FROM node:8.11
 
